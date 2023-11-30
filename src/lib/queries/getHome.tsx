@@ -10,8 +10,9 @@ export default async function getHome(uri:string){
               GQL_content {
                 fieldGroupName
               }
-              pageTitle {
-                pageTitle
+           
+              homePageTitle {
+                homePageTitle
               }
             }
           }

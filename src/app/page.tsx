@@ -9,7 +9,8 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div>
-        <h1>{data?.pageTitle.pageTitle}</h1>
+        <p>{data?.text}</p>
+        <h1>{data?.homePageTitle.homePageTitle}</h1>
         <p>{data?.content}</p>
        
       </div>
