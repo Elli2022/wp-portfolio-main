@@ -9,49 +9,79 @@ export default async function Home() {
   const navlinks = await getPages();
   const navHits = Object.values(navlinks.edges).map((hit: any) => hit.node);
 
-  // Filtrera ut 'Bootstrap' och 'All' från navigationslänkarna.
-  const filteredNavHits = navHits.filter((hit: any) => hit.title !== "Bootstrap" && hit.title !== "All");
+  // Identifiera länkar för "Portfolio", "About", och "Contact"
+  const mainLinks = {
+    portfolio: navHits.find((hit: any) => hit.title === "Portfolio"),
+    about: navHits.find((hit: any) => hit.title === "About"),
+    contact: navHits.find((hit: any) => hit.title === "Contact"),
+  };
+
+  // Filtrera ut dessa specifika länkar så att de inte renderas igen senare
+  const otherLinks = navHits.filter(
+    (hit: any) =>
+      hit.title !== "Portfolio" &&
+      hit.title !== "About" &&
+      hit.title !== "Contact"
+  );
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#d6dbdc] to-white text-black p-24">
+      {/* Navigationsmenyn med "Portfolio", "About", och "Contact" */}
       <nav className="flex justify-between items-center">
-        {filteredNavHits.map((hit: any) => (
-          <a key={hit.id} href={hit.uri} className="link">
-            {hit.title}
-          </a>
-        ))}
+        {Object.values(mainLinks).map(
+          (link: any) =>
+            link && (
+              <a key={link.id} href={link.uri} className="link">
+                {link.title}
+              </a>
+            )
+        )}
       </nav>
 
       <header className="text-center mt-10">
         <p className="mt-4">{data?.homePage.presentingText}</p>
-        <h1 className="text-5xl font-bold">{data?.homePage.homePageTitle}</h1>
+        <h1
+          className="text-5xl font-bold"
+          dangerouslySetInnerHTML={{
+            __html: data?.homePage.homePageTitle.replace(
+              "fueled",
+              "fueled<br>"
+            ),
+          }}
+        ></h1>
       </header>
 
+      {/* "Explore Works"-knappen och de andra länkarna direkt under den */}
       <div className="text-center mt-10">
         <a href={data?.homePage.buttonUrl} className="btn inline-block my-4">
           {data?.homePage.buttonText}
         </a>
-
-        {/* Här renderas "Bootstrap" och "All" länkarna i samma stil som de andra länkarna */}
-        <div className="mt-4">
-          <a href="/bootstrap" className="link inline-block mx-2 my-2">
-            Bootstrap
-          </a>
-          <a href="/all" className="link inline-block mx-2 my-2">
-            All
-          </a>
+        {/* Övriga länkar */}
+        <div className="other-links-container">
+          {otherLinks.map((link: any) => (
+            <a
+              key={link.id}
+              href={link.uri}
+              className="link inline-block mx-2 my-2"
+            >
+              {link.title}
+            </a>
+          ))}
         </div>
       </div>
 
-      <GalleryPagination initialProjects={data?.homePage.projectGallery || []} />
+      <GalleryPagination
+        initialProjects={data?.homePage.projectGallery || []}
+      />
 
       <div className="mt-4 text-center">
         <p className="text-xl">
           {data?.homePage.freelanceProjects.freelanceTitle}
         </p>
-        <h3 className="text-2xl font-semibold">
+        <h3 className="text-4xl font-semibold">
           {data?.homePage.freelanceProjects.freelanceDescription}
         </h3>
+
         <a
           href={data?.homePage.freelanceProjects.freelanceContactUrl}
           className="btn bg-[var(--primary-color)] hover:bg-[var(--hover-color)] mt-4"

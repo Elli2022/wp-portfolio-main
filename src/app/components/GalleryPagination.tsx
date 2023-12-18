@@ -52,9 +52,9 @@ export const GalleryPagination = ({
             )
         )}
       </section>
-      <div className="flex justify-center items-center space-x-1">
+      <div className="flex justify-center items-center flex-wrap gap-2 my-4">
         <button
-          className="px-3 py-1 rounded-md rounded-l-lg border-2 border-black focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-blue-500 transition ease-in-out duration-150"
+          className="px-2 py-1 md:px-3 md:py-2 text-sm md:text-base rounded-md border border-black focus:outline-none focus:shadow-outline transition ease-in-out duration-150"
           onClick={handlePrev}
           disabled={currentPage === 1}
         >
@@ -63,7 +63,7 @@ export const GalleryPagination = ({
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
-            className={`px-4 py-1 rounded-md focus:outline-none border-2 border-black focus:shadow-outline-blue focus:border-blue-300 active:bg-blue-500 transition ease-in-out duration-150 ${
+            className={`px-2 py-1 md:px-3 md:py-2 text-sm md:text-base rounded-md border border-black focus:outline-none focus:shadow-outline transition ease-in-out duration-150 ${
               currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-white"
             }`}
             onClick={() => setCurrentPage(i + 1)}
@@ -72,7 +72,7 @@ export const GalleryPagination = ({
           </button>
         ))}
         <button
-          className="px-3 py-1 rounded-md rounded-r-lg border-2 border-black focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-blue-500 transition ease-in-out duration-150"
+          className="px-2 py-1 md:px-3 md:py-2 text-sm md:text-base rounded-md border border-black focus:outline-none focus:shadow-outline transition ease-in-out duration-150"
           onClick={handleNext}
           disabled={currentPage === totalPages}
         >
