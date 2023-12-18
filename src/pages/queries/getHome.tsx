@@ -33,19 +33,23 @@ export default async function getHome(uri: string) {
         projectUrl
         projectImage {
           mediaItemUrl
+        } 
+      }
+      freelanceProjects {
+        freelanceDescription
+        freelanceProjectsButton
+        freelanceTitle
+        freelanceProjectsLink {
+          title
+          url
         }
       }
       homePageTitle
       presentingText
-      freelanceProjects {
-        freelanceContactUrl
-        freelanceDescription
-        freelanceTitle
-        freelanceProjectsButton
-        freelanceProjectsUrl
-      }
+      
     }
     uri
+    
   }
 }
         `,

@@ -56,8 +56,6 @@ link, .home2-link{
   margin-top: 20px;
 }
 
-
-
 /* Stilar för hover-effekter */
 .btn:hover, .btn:focus {
   background-color: #0056b3; /* Mörkare blå när knappen är hoverad eller fokuserad */
@@ -84,3 +82,19 @@ link, .home2-link{
 }
 
 
+/* Används för att korrigera layouten för kategori-länkar om de är knappar */
+.category-links {
+  text-align: center;
+  margin-top: 20px; /* Lägg till önskat avstånd från "Explore Works"-knappen */
+}
+
+/* Om du vill att kategori-länkarna ska ha lite utrymme mellan dem */
+.category-link:not(:last-child) {
+  margin-right: 15px;
+}
+
+/* Anpassar storleken på kategoriknapparna */
+.category-link {
+  padding: 8px 20px; /* Mindre än .btn om du vill */
+  font-size: 0.875rem; /* Mindre än .btn om du vill */
+}
