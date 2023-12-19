@@ -1,5 +1,6 @@
 //src/lib/queries/getHome.tsx
-import WP from "../api/wp";
+import WP from "../api/wp"; // Om din WP-funktion är korrekt exporterad från "../api/wp"
+
 
 export default async function getHome(uri: string) {
   try {
