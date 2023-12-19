@@ -1,10 +1,11 @@
+//src/pages/queries/getPosts.tsx
 import WP from "../api/wp";
 
-export default async function getPosts() {
+export default async function getPosts(afterCursor = '', first = 10) {
   try {
     const resPost = await WP(
-      `query GetPosts($after: String, $before: String, $first: Int, $last: Int) {
-        posts(after: $after, before: $before, first: $first, last: $last) {
+      `query GetPosts($after: String , $first: Int, $last: Int, $before: String) {
+        posts(after: $after, first: $first, last: $last, before: $before,) {
           edges {
             node {
               id
@@ -18,13 +19,17 @@ export default async function getPosts() {
             }
             cursor
           }
+          pageInfo {
+            startCursor
+            hasNextPage
+            hasPreviousPage
+            endCursor
+          }
         }
       }`,
       {
-        after: "", // Du kan definiera dessa värden eller ta emot dem som funktionens parametrar
-        before: "",
-        first: 10,
-        last: null,
+        after: afterCursor,
+        first,
       }
     );
 

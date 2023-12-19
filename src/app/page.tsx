@@ -1,9 +1,10 @@
 // src/app/page.tsx
 import React from 'react';
+import { useRouter } from 'next/router';
 import getHome from "@/pages/queries/getHome";
 import getPages from "@/pages/queries/getPages";
-import GalleryPagination from "./components/GalleryPagination";
-import getPosts from "@/pages/queries/getPosts"; // Importera getPosts-funktionen
+import getPosts from "@/pages/queries/getPosts";
+import GalleryPagination from './components/GalleryPagination';
 
 export default async function Home() {
   // Hämta data...
@@ -12,6 +13,7 @@ export default async function Home() {
   const postsData = await getPosts(); // Anropa getPosts med rätt URI
   console.log(postsData);
   const navHits = Object.values(navlinks.edges).map((hit: any) => hit.node);
+  
 
   // Identifiera länkar för "Portfolio", "About", och "Contact"
   const mainLinks = {
@@ -63,19 +65,23 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Inläggen */}
-      <div className="posts-container">
-  {postsData && postsData.map((post:any) => (
-    <div key={post.id}>
-      <h2>{post.title}</h2>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+{/* Inläggen */}
+<div className="posts-container">
+  {postsData && postsData.map((post: any) => (
+    <div key={post.id} className="post-item">
       {post.featuredImage && post.featuredImage.node && post.featuredImage.node.mediaItemUrl && (
         <img src={post.featuredImage.node.mediaItemUrl} alt={post.title} />
       )}
+      <div className="post-info">
+        <h2 className="post-title">{post.title}</h2>
+        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+      </div>
     </div>
   ))}
 </div>
 
+
+<GalleryPagination initialProjects={[]}/>
 
       {/* Freelance-projektsektionen */}
       <div className="mt-4 text-center">

@@ -98,3 +98,35 @@ link, .home2-link{
   padding: 8px 20px; /* Mindre än .btn om du vill */
   font-size: 0.875rem; /* Mindre än .btn om du vill */
 }
+
+
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.post-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.post-item img {
+  width: 100%;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.post-item:hover img {
+  transform: scale(1.03);
+}
+
+.post-title {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
