@@ -20,7 +20,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   const searchParams = useSearchParams();
 
   if (!searchParams) {
-    return null; // Hantera null-fallet
+    return null;
   }
 
   const page = parseInt(searchParams.get('page') ?? '1', 10);
@@ -28,7 +28,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
 
   const handlePrevPage = () => {
     if (hasPrevPage && page > 1) {
-      router.push(`/?page=${page - 1}&per_page=${perPage}`);
+      router.push(`/?page=${page - 1}&per_page=${perPage}&before=${encodeURIComponent(startCursor)}`);
     }
   };
 
@@ -48,7 +48,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
       </button>
 
       <div>
-        {page} / {Math.ceil(10 / perPage)} {/* Uppdatera detta vid behov */}
+        {page} / {Math.ceil(10 / perPage)}
       </div>
 
       <button

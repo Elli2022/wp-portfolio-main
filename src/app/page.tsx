@@ -6,21 +6,14 @@ import getPosts from "@/pages/queries/getPosts";
 import PaginationControls from "./components/PaginationControls";
 
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const page = searchParams["page"] ?? "1";
-  const per_page = searchParams["per_page"] ?? "6";
-  console.log(`Fetching data for page: ${page}, perPage: ${per_page}`);
+  const perPage = searchParams["per_page"] ?? "6";
 
   
    
   
-  // mocked, skipped and limited in the real app
-  const start = (Number(page) - 1) * Number(per_page); // 0, 6, 12 ...
-  const end = start + Number(per_page); // 6, 12, 18 ...
+  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage));
 
   // Hämtar data...
   const data = await getHome("/home");
@@ -95,8 +88,7 @@ export default async function Home({
 
       {/* Inläggen */}
       <div className="posts-container">
-        {postsData &&
-          postsData.map((post: any) => (
+      {posts && posts.map((post: any) => (
             <div key={post.id} className="post-item">
               {post.featuredImage &&
                 post.featuredImage.node &&

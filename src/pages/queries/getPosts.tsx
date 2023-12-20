@@ -1,12 +1,17 @@
 import WP from "../api/wp";
 
-export default async function getPosts(page = 1, perPage = 6, endCursor = "") {
+export default async function getPosts(page = 1, perPage = 6, afterCursor = "", beforeCursor = "") {
   try {
-    console.log(`Fetching posts with page: ${page}, perPage: ${perPage}, endCursor: ${endCursor}`);
+    const queryArgs = {
+      after: afterCursor || null,
+      before: beforeCursor || null,
+      first: afterCursor ? perPage : null,
+      last: beforeCursor ? perPage : null,
+    };
 
     const resPost = await WP(
-      `query GetPosts($after: String, $first: Int) {
-        posts(after: $after, first: $first) {
+      `query GetPosts($after: String, $before: String, $first: Int, $last: Int) {
+        posts(after: $after, before: $before, first: $first, last: $last) {
           edges {
             node {
               id
@@ -28,21 +33,17 @@ export default async function getPosts(page = 1, perPage = 6, endCursor = "") {
           }
         }
       }`,
-      {
-        after: endCursor,
-        first: perPage,
-      }
+      queryArgs
     );
 
     if (!resPost?.data) {
       throw new Error("Could not fetch posts");
     }
 
-    console.log("Response from WP GraphQL:", resPost?.data);
-
-    const postsData = resPost?.data?.posts?.edges?.map((edge: { node: any; }) => edge.node);
-    return postsData;
-    
+    return {
+      posts: resPost?.data?.posts?.edges?.map((edge: { node: any; }) => edge.node),
+      pageInfo: resPost?.data?.posts?.pageInfo,
+    };
 
   } catch (error) {
     console.error("Error fetching posts:", error);
