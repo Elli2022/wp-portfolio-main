@@ -1,12 +1,16 @@
+// src/pages/queries/getPosts.tsx
 import WP from "../api/wp";
 
 export default async function getPosts(page = 1, perPage = 6, afterCursor = "", beforeCursor = "") {
   try {
+    // Beräkna antalet inlägg att hoppa över baserat på sidan och per sidans inlägg
+    const offset = (page - 1) * perPage;
+
     const queryArgs = {
       after: afterCursor || null,
       before: beforeCursor || null,
-      first: afterCursor ? perPage : null,
-      last: beforeCursor ? perPage : null,
+      first: perPage,
+      last: null, // Ta bort last för att undvika att hämta tidigare inlägg
     };
 
     const resPost = await WP(
@@ -40,8 +44,13 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "", 
       throw new Error("Could not fetch posts");
     }
 
+    // Hämta bara de inlägg som är relevanta för den aktuella sidan
+    const relevantPosts = resPost?.data?.posts?.edges
+      ?.map((edge: { node: any; }) => edge.node)
+      .slice(offset, offset + perPage);
+
     return {
-      posts: resPost?.data?.posts?.edges?.map((edge: { node: any; }) => edge.node),
+      posts: relevantPosts,
       pageInfo: resPost?.data?.posts?.pageInfo,
     };
 
