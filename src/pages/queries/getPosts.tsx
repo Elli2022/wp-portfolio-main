@@ -1,11 +1,12 @@
-//src/pages/queries/getPosts.tsx
 import WP from "../api/wp";
 
-export default async function getPosts(afterCursor = '', first = 10) {
+export default async function getPosts(page = 1, perPage = 6, endCursor = "") {
   try {
+    console.log(`Fetching posts with page: ${page}, perPage: ${perPage}, endCursor: ${endCursor}`);
+
     const resPost = await WP(
-      `query GetPosts($after: String , $first: Int, $last: Int, $before: String) {
-        posts(after: $after, first: $first, last: $last, before: $before,) {
+      `query GetPosts($after: String, $first: Int) {
+        posts(after: $after, first: $first) {
           edges {
             node {
               id
@@ -28,8 +29,8 @@ export default async function getPosts(afterCursor = '', first = 10) {
         }
       }`,
       {
-        after: afterCursor,
-        first,
+        after: endCursor,
+        first: perPage,
       }
     );
 
@@ -37,9 +38,11 @@ export default async function getPosts(afterCursor = '', first = 10) {
       throw new Error("Could not fetch posts");
     }
 
-    // Notera ändringen här från `.page` till `.posts.edges`
+    console.log("Response from WP GraphQL:", resPost?.data);
+
     const postsData = resPost?.data?.posts?.edges?.map((edge: { node: any; }) => edge.node);
     return postsData;
+    
 
   } catch (error) {
     console.error("Error fetching posts:", error);
