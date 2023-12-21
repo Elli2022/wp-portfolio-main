@@ -29,7 +29,10 @@ const PaginationControls: FC<PaginationControlsProps> = ({
 
   const handlePrevPage = () => {
     if (hasPrevPage && page > 1) {
-      router.push(`/?page=${page - 1}&per_page=${perPage}&before=${encodeURIComponent(startCursor)}`);
+      const prevPageUrl = startCursor
+        ? `/?page=${page - 1}&per_page=${perPage}&before=${encodeURIComponent(startCursor)}`
+        : `/?page=${page - 1}&per_page=${perPage}`;
+      router.push(prevPageUrl);
     }
   };
 
@@ -63,3 +66,4 @@ const PaginationControls: FC<PaginationControlsProps> = ({
 };
 
 export default PaginationControls;
+
