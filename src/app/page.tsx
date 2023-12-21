@@ -6,14 +6,17 @@ import getPosts from "@/pages/queries/getPosts";
 import PaginationControls from "./components/PaginationControls";
 
 
-export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-  const page = searchParams["page"] ?? "1";
-  const perPage = searchParams["per_page"] ?? "6";
 
-  
-   
-  
-  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage));
+
+export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  // Om 'page' och 'per_page' är arrays, använd första värdet. Annars, använd värdet direkt.
+  const page = Array.isArray(searchParams["page"]) ? searchParams["page"][0] : searchParams["page"] ?? "1";
+  const perPage = Array.isArray(searchParams["per_page"]) ? searchParams["per_page"][0] : searchParams["per_page"] ?? "6";
+
+  // Hantera 'after' på samma sätt
+  const afterCursor = Array.isArray(searchParams["after"]) ? searchParams["after"][0] : searchParams["after"] ?? "";
+
+  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage), afterCursor);
 
   // Hämtar data...
   const data = await getHome("/home");
@@ -109,7 +112,12 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
           ))}
       </div>
 
-      <PaginationControls hasNextPage={true} hasPrevPage={true} endCursor={""} startCursor={""} />
+      <PaginationControls 
+        hasNextPage={pageInfo.hasNextPage} 
+        hasPrevPage={Number(page) > 1} 
+        endCursor={pageInfo.endCursor} 
+        startCursor={pageInfo.startCursor} 
+      />
 
       {/* Freelance-projektsektionen */}
       <div className="mt-4 text-center">
