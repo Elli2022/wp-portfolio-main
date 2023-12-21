@@ -37,6 +37,7 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "") 
                   mediaItemUrl
                 }
               }
+            slug
             }
             cursor
           }

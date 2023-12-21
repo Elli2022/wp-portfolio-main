@@ -1,10 +1,22 @@
 // src/app/page.tsx
 import React from "react";
+import Link from "next/link";
 import getHome from "@/pages/queries/getHome";
 import getPages from "@/pages/queries/getPages";
 import getPosts from "@/pages/queries/getPosts";
 import PaginationControls from "./components/PaginationControls";
 
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  featuredImage?: {
+    node: {
+      mediaItemUrl: string;
+      slug: string;
+    };
+  };
+}
 
 
 
@@ -18,6 +30,14 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
   const { posts, pageInfo } = await getPosts(Number(page), Number(perPage), afterCursor);
 
+  // Debugging: Log the posts array
+  console.log("Posts:", posts);
+
+   // Debugging: Log the slug of each post
+   console.log("Post slugs:", posts.map((post: any) => post.slug));
+
+
+
   // Hämtar data...
   const data = await getHome("/home");
   console.log("Home data:", data);
@@ -27,6 +47,8 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
   const postsData = await getPosts();
   console.log("PostData:", postsData);
+
+  
 
   const navHits = Object.values(navlinks.edges).map((hit: any) => hit.node);
   console.log("Navhits: ", navHits)
@@ -42,6 +64,10 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
   const otherLinks = navHits.filter(
     (hit: any) => !["Portfolio", "About", "Contact"].includes(hit.title)
   );
+
+  // Debugging: Log the slug of each post
+  console.log("Post slugs:", posts.map((post: any) => post.slug));
+
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#d6dbdc] to-white text-black p-24">
@@ -89,18 +115,18 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
         </div>
       </div>
 
-      {/* Inläggen */}
-      <div className="posts-container">
-      {posts && posts.map((post: any) => (
-            <div key={post.id} className="post-item">
-              {post.featuredImage &&
-                post.featuredImage.node &&
-                post.featuredImage.node.mediaItemUrl && (
-                  <img
-                    src={post.featuredImage.node.mediaItemUrl}
-                    alt={post.title}
-                  />
-                )}
+    
+{/* Inläggen */}
+
+        <div className="posts-container">
+          {posts.map((post: any) => (
+            <Link key={post.id} href={`/projects/${post.slug}`}>
+              {post.featuredImage?.node?.mediaItemUrl && (
+                <img
+                  src={post.featuredImage.node.mediaItemUrl}
+                  alt={post.title}
+                />
+              )}
               <div className="post-info">
                 <h2 className="post-title">{post.title}</h2>
                 <div
@@ -108,9 +134,11 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </div>
-            </div>
+            </Link>
           ))}
-      </div>
+        </div>
+ 
+
 
       <PaginationControls 
         hasNextPage={pageInfo.hasNextPage} 
