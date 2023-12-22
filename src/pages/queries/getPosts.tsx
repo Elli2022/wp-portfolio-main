@@ -5,32 +5,20 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "", 
   try {
     let queryArgs = {};
 
-    // Bestäm vilka argument som ska användas baserat på sidnumrering
     if (afterCursor) {
-      // Framåtpaginering
-      queryArgs = {
-        after: afterCursor,
-        first: perPage
-      };
-    } else if (beforeCursor) {
-      // Bakåtpaginering
-      queryArgs = {
-        before: beforeCursor,
-        last: perPage
-      };
+      queryArgs = { after: afterCursor, first: perPage };
+    } else if (beforeCursor && page > 1) {
+      queryArgs = { before: beforeCursor, last: perPage };
     } else {
-      // Första sidan eller standardpaginering
-      queryArgs = {
-        first: perPage
-      };
+      queryArgs = { first: perPage };
     }
 
     console.log("Page:", page);
     console.log("PerPage:", perPage);
     console.log("AfterCursor:", afterCursor);
     console.log("BeforeCursor:", beforeCursor);
+    console.log("Query Arguments:", queryArgs); 
 
-    // GraphQL-förfrågan
     const resPost = await WP(
       `query GetPosts($after: String, $first: Int, $last: Int, $before: String) {
         posts(after: $after, first: $first, last: $last, before: $before) {
@@ -70,6 +58,6 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "", 
     };
   } catch (error) {
     console.error("Error fetching posts:", error);
-    throw error; 
+    throw error;
   }
 }

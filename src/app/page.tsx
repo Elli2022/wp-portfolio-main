@@ -27,15 +27,15 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
   // Hantera 'after' på samma sätt
   const endCursor = Array.isArray(searchParams["after"]) ? searchParams["after"][0] : searchParams["after"] ?? "";
-
-  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage), endCursor);
+  const beforeCursor = Array.isArray(searchParams["before"]) ? searchParams["before"][0] : searchParams["before"] ?? "";
+  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage), endCursor, beforeCursor);
+  
 
   // Debugging: Log the posts array
   console.log("Posts:", posts);
 
    // Debugging: Log the slug of each post
    console.log("Post slugs:", posts.map((post: any) => post.slug));
-
 
 
   // Hämtar data...
@@ -155,12 +155,12 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
  
 
 
-      <PaginationControls 
-        hasNextPage={pageInfo.hasNextPage} 
-        hasPrevPage={Number(page) > 1} 
-        endCursor={pageInfo.endCursor} 
-        startCursor={pageInfo.startCursor} 
-      />
+        <PaginationControls 
+        hasNextPage={pageInfo.hasNextPage}
+        hasPrevPage={Number(page) > 1}
+        endCursor={pageInfo.endCursor}
+        startCursor={pageInfo.startCursor} data={undefined} beforeCursor={""} posts={""}  // andra props vid behov
+/>
 
       {/* Freelance-projektsektionen */}
       <div className="mt-4 text-center">
