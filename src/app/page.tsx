@@ -71,17 +71,32 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#d6dbdc] to-white text-black p-24">
-      {/* Navigationsmenyn */}
-      <nav className="flex justify-between items-center">
-        {Object.values(mainLinks).map(
-          (link: any) =>
-            link && (
-              <a key={link.id} href={link.uri} className="link">
-                {link.title}
-              </a>
-            )
-        )}
-      </nav>
+   {/* Navigationsmenyn */}
+<nav className="nav-container">
+  {/* Vänster länk */}
+  <div className="nav-left">
+    {mainLinks.portfolio && (
+      <a key={mainLinks.portfolio.id} href={mainLinks.portfolio.uri} className="link">
+        {mainLinks.portfolio.title}
+      </a>
+    )}
+  </div>
+
+  {/* Höger länkar */}
+  <div className="nav-right">
+    {mainLinks.about && (
+      <a key={mainLinks.about.id} href={mainLinks.about.uri} className="link">
+        {mainLinks.about.title}
+      </a>
+    )}
+    {mainLinks.contact && (
+      <a key={mainLinks.contact.id} href={mainLinks.contact.uri} className="link">
+        {mainLinks.contact.title}
+      </a>
+    )}
+  </div>
+</nav>
+
 
       {/* Header-sektionen */}
       <header className="text-center mt-10">

@@ -26,6 +26,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
     return null;
   }
 
+  
   const page = parseInt(searchParams.get('page') ?? '1', 10);
   const perPage = parseInt(searchParams.get('per_page') ?? '6', 10);
 
@@ -46,6 +47,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
     }
   };
 
+  
   return (
     <div className='flex items-center justify-center gap-2'>
       <button

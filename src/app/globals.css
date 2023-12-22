@@ -14,7 +14,7 @@
 /* Mörkt tema */
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #fff; /* Vit */
+    --text-color: white;
     --background-start: #000; /* Svart */
     --background-end: #000; /* Svart */
   }
@@ -25,7 +25,38 @@ body {
   background: linear-gradient(to bottom, var(--background-start), var(--background-end));
 }
 
-/* ... andra stilar ... */
+/* Navigation styles */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+}
+
+/* Specifika stilar för vänster länk */
+.nav-left a {
+  margin-right: auto; /* Skjuter allt i .nav-right till höger */
+  font-weight: bold; /* Gör texten fetare om det önskas */
+  text-decoration: none; /* Tar bort understrykning */
+  font-size: 1rem; /* Ställ in önskad storlek */
+}
+
+/* Specifika stilar för höger länkar */
+.nav-right a {
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-left: 10px; /* Lägger till utrymme mellan länkarna */
+}
+
+/* För att lägga till en hover-effekt på länkarna */
+.nav-container a:hover {
+  color: var(--primary-color); /* Färgändring vid hover */
+}
+
 
 .btn {
   padding: 10px 25px;
@@ -100,33 +131,47 @@ link, .home2-link{
 }
 
 
+/* Anpassar .posts-container för att använda grid layout */
 .posts-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ändra 250px till önskad minsta bredd */
+  gap: 1rem; /* Detta är avståndet mellan grid-elementen */
 }
 
+/* Stilar för varje grid-element som innehåller bild och text */
 .post-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  overflow: hidden; /* Gör så att bilden inte går utanför sin container */
 }
 
+/* Stilar för bilder för att göra dem kvadratiska och centrerade */
 .post-item img {
-  width: 100%;
-  border-radius: 8px;
-  transition: transform 0.3s ease-in-out;
+  width: 100%; /* Fyller bredden av sin container */
+  height: 0; /* Sätter en initial höjd till 0 */
+  padding-top: 100%; /* Padding-top på 100% av bredden ger en kvadratisk bild */
+  object-fit: cover; /* Ser till att bilden täcker hela utrymmet utan att förvrängas */
+  position: absolute; /* Positionerar bilden absolut inuti sin container */
 }
 
-.post-item:hover img {
-  transform: scale(1.03);
+/* Stilar för bild-containern för att göra den kvadratisk och relativt positionerad */
+.post-item .image-container {
+  width: 100%; /* Fyller bredden av sin container */
+  padding-top: 100%; /* Skapar en kvadratisk container */
+  position: relative; /* Gör det möjligt att absolut positionera bilden inuti */
 }
 
-.post-title {
+/* Exempel på en titelstil under bilden */
+.post-title{
   margin-top: 0.5rem;
   font-size: 1.1rem;
   font-weight: bold;
+  text-align: center;
 }
 
+p{
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
