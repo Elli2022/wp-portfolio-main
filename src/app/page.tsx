@@ -55,14 +55,14 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
   // Identifiera länkar för "Portfolio", "About", och "Contact"
   const mainLinks = {
-    portfolio: navHits.find((hit: any) => hit.title === "Portfolio"),
-    about: navHits.find((hit: any) => hit.title === "About"),
-    contact: navHits.find((hit: any) => hit.title === "Contact"),
+    portfolio: navHits.find((hit: any) => hit.title === "Portfolio."),
+    about: navHits.find((hit: any) => hit.title === "about me."),
+    contact: navHits.find((hit: any) => hit.title === "contact."),
   };
 
   // Filtrera ut dessa specifika länkar så att de inte renderas igen senare
   const otherLinks = navHits.filter(
-    (hit: any) => !["Portfolio", "About", "Contact"].includes(hit.title)
+    (hit: any) => !["Portfolio.", "about me.", "contact."].includes(hit.title)
   );
 
   // Debugging: Log the slug of each post
