@@ -1,32 +1,39 @@
-//src/pages/queries/getPosts.tsx
+// src/pages/queries/getPosts.tsx
 import WP from "../api/wp";
 
-export default async function getPosts(page = 1, perPage = 6, afterCursor = "") {
+export default async function getPosts(page = 1, perPage = 6, afterCursor = "", beforeCursor = "") {
   try {
     let queryArgs = {};
 
-    // Använd endast 'first' och 'after' för paginering
-    if (page === 1) {
-      queryArgs = {
-        after: null,
-        first: perPage,
-      };
-    } else {
+    // Bestäm vilka argument som ska användas baserat på sidnumrering
+    if (afterCursor) {
+      // Framåtpaginering
       queryArgs = {
         after: afterCursor,
-        first: perPage,
+        first: perPage
+      };
+    } else if (beforeCursor) {
+      // Bakåtpaginering
+      queryArgs = {
+        before: beforeCursor,
+        last: perPage
+      };
+    } else {
+      // Första sidan eller standardpaginering
+      queryArgs = {
+        first: perPage
       };
     }
 
     console.log("Page:", page);
     console.log("PerPage:", perPage);
     console.log("AfterCursor:", afterCursor);
+    console.log("BeforeCursor:", beforeCursor);
 
-    console.log('GraphQL Query Parameters:', queryArgs);
-
+    // GraphQL-förfrågan
     const resPost = await WP(
-      `query GetPosts($after: String, $first: Int) {
-        posts(after: $after, first: $first) {
+      `query GetPosts($after: String, $first: Int, $last: Int, $before: String) {
+        posts(after: $after, first: $first, last: $last, before: $before) {
           edges {
             node {
               id
@@ -35,15 +42,18 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "") 
               featuredImage {
                 node {
                   mediaItemUrl
+                  altText
                 }
               }
-            slug
+              slug
             }
             cursor
           }
           pageInfo {
+            startCursor
             endCursor
             hasNextPage
+            hasPreviousPage
           }
         }
       }`,

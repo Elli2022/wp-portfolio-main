@@ -26,9 +26,9 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
   const perPage = Array.isArray(searchParams["per_page"]) ? searchParams["per_page"][0] : searchParams["per_page"] ?? "6";
 
   // Hantera 'after' på samma sätt
-  const afterCursor = Array.isArray(searchParams["after"]) ? searchParams["after"][0] : searchParams["after"] ?? "";
+  const endCursor = Array.isArray(searchParams["after"]) ? searchParams["after"][0] : searchParams["after"] ?? "";
 
-  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage), afterCursor);
+  const { posts, pageInfo } = await getPosts(Number(page), Number(perPage), endCursor);
 
   // Debugging: Log the posts array
   console.log("Posts:", posts);

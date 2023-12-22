@@ -1,7 +1,5 @@
 // src/pages/projects/[slugs]/page.tsx
 
-
-
 interface Post {
   title: string;
   content: string;
@@ -30,9 +28,6 @@ interface ProjectPageProps {
 const ProjectPage = ({ params }: {params:{slugs: string}}) => {
   console.log(params);
 
-
-  
- 
   return (
     <div>
       <h1>{params.slugs}</h1>

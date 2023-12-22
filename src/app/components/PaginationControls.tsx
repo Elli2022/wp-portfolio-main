@@ -4,11 +4,13 @@
 import { FC } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+
 interface PaginationControlsProps {
   startCursor: string;
   hasNextPage: boolean;
   hasPrevPage: boolean;
   endCursor: string;
+  
 }
 
 const PaginationControls: FC<PaginationControlsProps> = ({
@@ -38,17 +40,19 @@ const PaginationControls: FC<PaginationControlsProps> = ({
 
   const handleNextPage = () => {
     if (hasNextPage) {
-      router.push(`/?page=${page + 1}&per_page=${perPage}&after=${encodeURIComponent(endCursor)}`);
+      // Använd encodeURIComponent för att hantera speciella tecken i cursor-strängen
+      const nextPageUrl = `/?page=${page + 1}&per_page=${perPage}&after=${encodeURIComponent(endCursor)}`;
+      router.push(nextPageUrl);
     }
   };
 
   return (
-    <div className='flex gap-2'>
+    <div className='flex items-center justify-center gap-2'>
       <button
         className='bg-blue-500 text-white p-1'
         disabled={!hasPrevPage}
         onClick={handlePrevPage}>
-        prev page
+        {"<"}
       </button>
 
       <div>
@@ -59,7 +63,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
         className='bg-blue-500 text-white p-1'
         disabled={!hasNextPage}
         onClick={handleNextPage}>
-        next page
+        {">"}
       </button>
     </div>
   );
