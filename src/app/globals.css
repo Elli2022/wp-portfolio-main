@@ -14,7 +14,7 @@
 /* Mörkt tema */
 @media (prefers-color-scheme: dark) {
   :root {
- 
+    --text-color: white; 
     --background-start: #000; /* Svart */
     --background-end: #000; /* Svart */
   }

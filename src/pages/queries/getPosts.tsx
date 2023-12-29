@@ -1,7 +1,12 @@
 // src/pages/queries/getPosts.tsx
 import WP from "../api/wp";
 
-export default async function getPosts(page = 1, perPage = 6, afterCursor = "", beforeCursor = "") {
+export default async function getPosts(
+  page = 1,
+  perPage = 6,
+  afterCursor = "",
+  beforeCursor = ""
+) {
   try {
     let queryArgs = {};
 
@@ -17,12 +22,12 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "", 
     console.log("PerPage:", perPage);
     console.log("AfterCursor:", afterCursor);
     console.log("BeforeCursor:", beforeCursor);
-    console.log("Query Arguments:", queryArgs); 
+    console.log("Query Arguments:", queryArgs);
 
     const resPost = await WP(
       `query GetPosts($after: String, $first: Int, $last: Int, $before: String) {
         posts(after: $after, first: $first, last: $last, before: $before) {
-          edges {
+          edges { 
             node {
               id
               title
@@ -53,7 +58,9 @@ export default async function getPosts(page = 1, perPage = 6, afterCursor = "", 
     }
 
     return {
-      posts: resPost?.data?.posts?.edges?.map((edge: { node: any; }) => edge.node),
+      posts: resPost?.data?.posts?.edges?.map(
+        (edge: { node: any }) => edge.node
+      ),
       pageInfo: resPost?.data?.posts?.pageInfo,
     };
   } catch (error) {
