@@ -1,9 +1,6 @@
 // src/pages/projects/[slugs]/page.tsx
 
 import React from "react";
-import { useRouter } from "next/navigation";
-import getPosts from "@/pages/queries/getPosts";
-import WP from "@/pages/api/wp";
 
 interface Post {
   title: string;
@@ -30,7 +27,34 @@ interface ProjectPageProps {
   post: Post;
 }
 
+interface FeaturedImageNode {
+  mediaItemUrl: string;
+  slug: string;
+}
+
+const apiKey = process.env.wordpressApiKey;
+
+const WP = async (query: string, variables?: any) => {
+  try {
+    const res = await fetch(`${apiKey}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query,
+        variables: variables || null,
+      }),
+    });
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    console.error(err);
+  }
+};
+
 export async function generateStaticParams() {
+  // Fetch all the slugs for the posts
   const posts = await WP(`
   query GetPosts {
     posts {
@@ -51,16 +75,46 @@ export async function generateStaticParams() {
   return paths;
 }
 
-const ProjectPage = ({ params }: { params: { slugs: string } }) => {
+const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
   // Logga den mottagna slug
   console.log("Received slug:", params.slugs);
 
   const fetchPostData = async () => {
-    // Antag att du har en funktion eller ett API-anrop för att hämta postdata baserat på slug
-    // Här loggar vi bara slug som ett exempel
-    console.log("Fetching data for slug:", params.slugs);
-    // Här skulle du hämta och returnera postdata
+    try {
+      const resPost = await WP(
+        `
+        query GetPostBySlug($slug: String!) {
+          postBy(slug: $slug) {
+            id
+            title
+            content
+            featuredImage {
+              node {
+                mediaItemUrl
+                altText
+              }
+            }
+            slug
+          }
+        }
+        `,
+        { slug: params.slugs }
+      );
+
+      // Here, you would handle the fetched post data
+      if (resPost.data) {
+        console.log("Fetched post data:", resPost.data.postBy);
+      } else {
+        console.log("No post found for slug:", params.slugs);
+      }
+    } catch (error) {
+      console.error("Error fetching post data:", error);
+    }
   };
+
+  // Här loggar vi bara slug som ett exempel
+  console.log("Fetching data for slug:", params.slugs);
+  // Här skulle du hämta och returnera postdata
 
   // Kalla på funktionen för att hämta data
   fetchPostData();
