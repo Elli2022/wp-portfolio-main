@@ -75,10 +75,13 @@ export async function generateStaticParams() {
   return paths;
 }
 
-const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
-  // Logga den mottagna slug
-  console.log("Received slug:", params.slugs);
+// Define a global variable to store the post data
+let globalPostData: {
+  [x: string]: any;
+  title: string;
+};
 
+const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
   const fetchPostData = async () => {
     try {
       const resPost = await WP(
@@ -97,31 +100,32 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
             slug
           }
         }
-        `,
+      `,
         { slug: params.slugs }
       );
 
-      // Here, you would handle the fetched post data
       if (resPost.data) {
-        console.log("Fetched post data:", resPost.data.postBy);
-      } else {
-        console.log("No post found for slug:", params.slugs);
+        // Store the fetched data in the global variable
+        globalPostData = resPost.data.postBy;
       }
     } catch (error) {
       console.error("Error fetching post data:", error);
     }
   };
 
-  // Här loggar vi bara slug som ett exempel
-  console.log("Fetching data for slug:", params.slugs);
-  // Här skulle du hämta och returnera postdata
-
-  // Kalla på funktionen för att hämta data
-  fetchPostData();
+  // Fetch the data
+  await fetchPostData();
 
   return (
     <div>
-      <h1>{params.slugs}</h1>
+      {/* <h1>{params.slugs}</h1> */}
+      {globalPostData && <h1>{globalPostData.title}</h1>}
+      {globalPostData.featuredImage && globalPostData.featuredImage.node && (
+        <img
+          src={globalPostData.featuredImage.node.mediaItemUrl}
+          alt={globalPostData.featuredImage.node.slug}
+        />
+      )}
     </div>
   );
 };
