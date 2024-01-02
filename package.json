@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "apollo": "^2.34.0",
+    "apollo": "^2.11.1",
     "graphql-tag": "^2.12.6",
     "link": "^2.1.0",
     "next": "^14.0.4",
