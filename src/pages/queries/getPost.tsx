@@ -3,20 +3,15 @@ const apiKey = process.env.wordpressApiKey;
 
 async function getPost(slug: string) {
   const query = `
-    query GetPostBySlug($slug: String!) {
-      postBy(slug: $slug) {
-        id
-        title
-        content
-        featuredImage {
-          node {
-            mediaItemUrl
-            altText
-          }
-        }
-        slug
+  query getPost($id: ID = "") {
+    post(id: $id, idType: URI) {
+      PostInfo {
+        branding
+        subtitle
       }
+      content
     }
+  }
   `;
 
   try {

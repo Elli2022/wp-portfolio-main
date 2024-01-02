@@ -39,7 +39,7 @@ export default async function getPosts(
                 }
               }
               slug
-              SubTitlePost {
+              PostInfo {
                 subtitle
               }
             }

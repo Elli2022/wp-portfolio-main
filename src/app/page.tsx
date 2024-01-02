@@ -144,11 +144,7 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
               )}
               <div className="post-info">
                 <h2 className="post-title">{post.title}</h2>
-               <p>{post.SubTitlePost.subtitle}</p>
-                {/* <div
-                  className="post-content"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                /> */}
+               <p>{post.PostInfo.subtitle}</p>
               </div>
             </Link>
           ))}
