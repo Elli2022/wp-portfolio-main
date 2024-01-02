@@ -1,8 +1,12 @@
 // src/pages/projects/[slugs]/page.tsx
 
 // Importera vår funktion för att hämta inlägg och React-biblioteket
-import getPost from "@/pages/queries/getPost";
 import React from "react";
+import getPost from "@/pages/queries/getPost";
+import Navigation from "@/app/components/Navigation";
+import getPages from "@/pages/queries/getPages";
+
+
 
 
 // Definiera en struktur för våra inlägg
@@ -32,6 +36,16 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
     }
   };
 
+  const navlinks = await getPages();
+  const navHits = navlinks.edges.map((edge: any) => edge.node);
+
+  // Identifiera länkar för "Portfolio", "About", och "Contact"
+  const mainLinks = {
+    portfolio: navHits.find((hit: any) => hit.title === "Portfolio."),
+    about: navHits.find((hit: any) => hit.title === "about me."),
+    contact: navHits.find((hit: any) => hit.title === "contact."),
+  };
+
   await fetchPostData(); // Utför datanhämtningen
 
   // Visar en laddningssida medan data hämtas
@@ -42,6 +56,11 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
   // När data är hämtad, rendera sida
   return (
     <div>
+      <Navigation 
+        portfolioLink={mainLinks.portfolio}
+        aboutLink={mainLinks.about}
+        contactLink={mainLinks.contact}
+      />
       <h1>{globalPostData.title}</h1> 
       {globalPostData.featuredImage && globalPostData.featuredImage.node && (
         <img
@@ -49,6 +68,7 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
           alt={globalPostData.featuredImage.node.slug} // Alt-text för bilden
         />
       )}
+      <div dangerouslySetInnerHTML={{ __html: globalPostData.content }} />
     </div>
   );
 };
