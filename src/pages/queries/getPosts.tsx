@@ -27,7 +27,7 @@ export default async function getPosts(
     const resPost = await WP(
       `query GetPosts($after: String, $first: Int, $last: Int, $before: String) {
         posts(after: $after, first: $first, last: $last, before: $before) {
-          edges { 
+          edges {
             node {
               id
               title
@@ -39,6 +39,9 @@ export default async function getPosts(
                 }
               }
               slug
+              SubTitlePost {
+                subtitle
+              }
             }
             cursor
           }

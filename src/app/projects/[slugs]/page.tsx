@@ -1,38 +1,117 @@
 // src/pages/projects/[slugs]/page.tsx
 
-// Importera vår funktion för att hämta inlägg och React-biblioteket
-import React from "react";
-import getPost from "@/pages/queries/getPost";
-import Navigation from "@/app/components/Navigation";
 import getPages from "@/pages/queries/getPages";
+import React from "react";
+import Navigation from "../../components/Navigation";
 
-
-
-
-// Definiera en struktur för våra inlägg
 interface Post {
-  title: string; // Titeln på inlägget
-  content: string; // Innehållet i inlägget
-  featuredImage: { // Objekt för framträdande bild
+  title: string;
+  content: string;
+  featuredImage: {
     node: {
-      mediaItemUrl: string; // Bildens URL
-      slug: string; // En identifierare för bilden
+      mediaItemUrl: string;
+      slug: string;
     };
   };
-  slug: string; // En identifierare för inlägget
+  slug: string;
 }
 
-// En global variabel för att lagra vårt inläggsdata
-let globalPostData: Post | null = null;
+interface PostNode {
+  featuredImage: {
+    node: {
+      slug: string;
+    };
+  };
+  slug: string;
+}
 
-// Vår huvudkomponent för att visa inlägg baserat på dess 'slug'
+interface ProjectPageProps {
+  post: Post;
+}
+
+interface FeaturedImageNode {
+  mediaItemUrl: string;
+  slug: string;
+}
+
+const apiKey = process.env.wordpressApiKey;
+
+const WP = async (query: string, variables?: any) => {
+  try {
+    const res = await fetch(`${apiKey}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query,
+        variables: variables || null,
+      }),
+    });
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    console.error(err);
+  }
+};
+
+export async function generateStaticParams() {
+  // Fetch all the slugs for the posts
+  const posts = await WP(`
+  query GetPosts {
+    posts {
+      edges {
+        node {
+          slug
+        }
+      }
+    }
+  }`);
+  const paths: any = [];
+  posts?.data?.posts?.edges?.map((post: any) => {
+    if (post && post.node && post.node.slug) {
+      paths.push({ params: { slug: post.node.slug } });
+    }
+  });
+
+  return paths;
+}
+
+// Define a global variable to store the post data
+let globalPostData: {
+  [x: string]: any;
+  title: string;
+};
+
 const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
-
-  // En funktion för att hämta inläggsdata från vår API
   const fetchPostData = async () => {
-    const resPost = await getPost(params.slugs); // Använder vår getPost-funktion med slug
-    if (resPost && resPost.data) { // Kontrollerar om vi faktiskt fick tillbaka data
-      globalPostData = resPost.data.postBy; // Sparar datan i vår globala variabel
+    try {
+      const resPost = await WP(
+        `
+        query GetPostBySlug($slug: String!) {
+          postBy(slug: $slug) {
+            id
+            title
+            content
+            featuredImage {
+              node {
+                mediaItemUrl
+                altText
+              }
+            }
+            slug
+          }
+        }
+      `,
+        { slug: params.slugs }
+      );
+
+      if (resPost.data) {
+        // Store the fetched data in the global variable
+        globalPostData = resPost.data.postBy;
+      }
+    } catch (error) {
+      console.error("Error fetching post data:", error);
     }
   };
 
@@ -46,15 +125,12 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
     contact: navHits.find((hit: any) => hit.title === "contact."),
   };
 
-  await fetchPostData(); // Utför datanhämtningen
 
-  // Visar en laddningssida medan data hämtas
-  if (!globalPostData) {
-    return <div>Loading...</div>;
-  }
+  // Fetch the data
+  await fetchPostData();
 
-  // När data är hämtad, rendera sida
-  return (
+   // När data är hämtad, rendera sida
+   return (
     <div>
       <Navigation 
         portfolioLink={mainLinks.portfolio}
@@ -73,4 +149,4 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
   );
 };
 
-export default ProjectPage; // Gör så att andra filer kan använda ProjectPage-komponent
+export default ProjectPage;

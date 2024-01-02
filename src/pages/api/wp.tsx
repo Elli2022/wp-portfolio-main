@@ -6,6 +6,7 @@ const WP = async (query: string, variables?: any) => {
 	try {
 		const res = await fetch(`${apiKey}`, {
 			method: "POST",
+			next: {revalidate:1},
 			headers: {
 				"Content-Type": "application/json",
 			},
