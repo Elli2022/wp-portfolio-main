@@ -1,17 +1,25 @@
-// getPost.tsx
+//src/pages/queries/getPost.tsx
+
 const apiKey = process.env.wordpressApiKey;
 
-async function getPost(slug: string) {
+async function getPost(slug: any) {
+  console.log("getPost called with slug:", slug);  // Loggar vilken slug som används
+
   const query = `
-  query getPost($id: ID = "") {
-    post(id: $id, idType: URI) {
-      PostInfo {
-        branding
-        subtitle
+    query getPost($id: ID = "") {
+      post(id: $id, idType: URI) {
+        PostInfo {
+          branding
+          subtitle
+          projectintrotext
+          projectdescription
+          clientheading
+          date
+          client
+        }
+        content
       }
-      content
     }
-  }
   `;
 
   try {
@@ -22,11 +30,22 @@ async function getPost(slug: string) {
       },
       body: JSON.stringify({
         query,
-        variables: { slug },
+        variables: { id: slug },  // Använder slug som ID
       }),
     });
 
     const data = await response.json();
+
+    console.log("GraphQL query response:", data);  // Loggar hela svaret från GraphQL
+
+    if (data.errors) {
+      console.error("GraphQL query errors:", data.errors);  // Loggar eventuella fel från GraphQL-svaret
+    }
+
+    if (data.data) {
+      console.log("Fetched post data:", data.data.post);  // Loggar den hämtade postdata
+    }
+
     return data;
   } catch (error) {
     console.error("Error fetching post:", error);

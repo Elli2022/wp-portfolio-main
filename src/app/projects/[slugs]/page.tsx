@@ -5,7 +5,7 @@ import React from "react";
 import getPages from "@/pages/queries/getPages";
 import Navigation from "../../components/Navigation";
 import WP from "@/pages/api/wp";
-import getPost from "@/pages/queries/getPost";
+import getPost from "../../../pages/queries/getPost";
 
 
 interface Post {
@@ -69,6 +69,7 @@ let globalPostData: {
 };
 
 const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
+  console.log("Received slug:", params.slugs); // Logga mottagen slug
   let globalPostData = null;
   let additionalPostInfo = null;  // Definiera additionalPostInfo här
 
@@ -91,15 +92,24 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
     { slug: params.slugs }
   );
 
+  console.log("WP Response:", resPost); // Logga svar från WP
+
   if (resPost.data) {
     globalPostData = resPost.data.postBy;
+    console.log("Global Post Data:", globalPostData); // Logga global post data
   }
 
   // Hämta ytterligare data med getPost
   const additionalData = await getPost(params.slugs);
+
+  console.log("Additional Data Response:", additionalData); // Logga ytterligare data
+
   if (additionalData && additionalData.data) {
     additionalPostInfo = additionalData.data.post;  // Tilldela data till additionalPostInfo
+    console.log("Additional Post Info:", additionalPostInfo); // Logga ytterligare post info
   }
+
+      console.log(additionalData.data.post.PostInfo.branding);
 
   const navlinks = await getPages();
   const navHits = navlinks.edges.map((edge: any) => edge.node);
@@ -109,7 +119,7 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
     contact: navHits.find((hit: any) => hit.title === "contact."),
   };
 
-  if (!globalPostData || !additionalPostInfo) {
+  if (!globalPostData) {
     return <div>Loading...</div>;
   }
 
@@ -131,13 +141,13 @@ const ProjectPage = async ({ params }: { params: { slugs: string } }) => {
     <div dangerouslySetInnerHTML={{ __html: globalPostData.content }} />
 
     <div>
-      <h2>{additionalPostInfo.PostInfo?.branding}</h2>
-      <p>{additionalPostInfo.PostInfo?.subtitle}</p>
-      <p>{additionalPostInfo.PostInfo?.projectintrotext}</p>
-      <p>{additionalPostInfo.PostInfo?.projectdescription}</p>
-      <p>{additionalPostInfo.PostInfo?.clientheading}</p>
-      <p>{additionalPostInfo.PostInfo?.date}</p>
-      <p>{additionalPostInfo.PostInfo?.client}</p>
+      <h2>{additionalData.data.post.PostInfo.branding}</h2>
+      <p>{additionalData.data.post.PostInfo.subtitle}</p>
+      <p>{additionalData.data.post.PostInfo.projectintrotext}</p>
+      <p>{additionalData.data.post.PostInfo.projectdescription}</p>
+      <p>{additionalData.data.post.PostInfo.clientheading}</p>
+      <p>{additionalData.data.post.PostInfo.date}</p>
+      <p>{additionalData.data.post.PostInfo.client}</p>
     </div>
   </div>
   );
