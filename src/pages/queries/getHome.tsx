@@ -7,27 +7,31 @@ export default async function getHome(uri:string){
         query getHome($uri: ID!){
             page(id: $uri, idType: URI) {
               id
-              content
-              homePage {
-                homePageTitle
-                presentingText
-                buttonText
-                buttonUrl
-                portfolioLinkText
-                aboutMeLinkText
-                aboutMeLinkUrl {
-                  url
-                }
-                contactLinkText
-                contactLinkUrl {
-                  url
-                }
-                portfolioLinkUrl {
-                  url
-                }
-              }
-            }
-          }
+    content
+    homePage {
+      homePageTitle
+      presentingText
+      buttonText
+      buttonUrl
+      portfolioLinkText
+      aboutMeLinkText
+      aboutMeLinkUrl {
+        url
+      }
+      contactLinkText
+      contactLinkUrl {
+        url
+      }
+      portfolioLinkUrl {
+        url
+      }
+      homePageGallery {
+        mediaItemUrl
+        uri
+      }
+    }
+  }
+}
         `, {uri})
 
         if(!res?.data){

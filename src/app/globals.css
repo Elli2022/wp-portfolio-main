@@ -52,6 +52,10 @@ body {
   margin-right: 15px; /* Justera avståndet mellan länkar */
 }
 
+link, .home2-link{
+  margin-top: 20px;
+}
+
 /* Stilar för hover-effekter */
 .btn:hover, .btn:focus {
   background-color: #0056b3; /* Mörkare blå när knappen är hoverad eller fokuserad */
@@ -65,3 +69,14 @@ body {
   text-decoration: underline; /* Om du vill ha en indikator på att det är en länk, annars ta bort denna rad */
 }
 
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+  gap: 1rem; /* Adjust the spacing between images as needed */
+}
+
+.gallery-image {
+  width: 100%; /* Makes the image responsive */
+  height: auto; /* Maintain the aspect ratio */
+  object-fit: cover; /* Cover the area without stretching the image */
+}
