@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# WP Portfolio
 
-## Getting Started
+This repository is the consolidated home for the `wp-portfolio` project history.
 
-First, run the development server:
+It is a Next.js and TypeScript portfolio site that fetches content from a WordPress API endpoint defined by the `wordpressApiKey` environment variable.
+
+## Run Locally
+
+Install dependencies and start the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Create a local environment file and define:
 
-## Learn More
+```bash
+wordpressApiKey=https://your-wordpress-api-endpoint
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Snapshot Timeline
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `snapshot/2023-11-30-main`
+- `snapshot/2023-11-30-rendering-ok`
+- `snapshot/2023-11-30-rendering-ok-explore-works-button`
+- `snapshot/2023-12-01-begun-on-navbar`
+- `snapshot/2023-12-01-serverside-rendering-works`
+- `snapshot/2023-12-01-navbar-navigation-works-Home-and-About`
+- `snapshot/2023-12-03-navbar-navigation-works-Home-and-About-test-for-gallery`
+- `snapshot/2023-12-04-two-gallery-sections-at-once-on-front-page`
+- `snapshot/2023-12-11-navbar-navigation-works-Home-and-About-test-for-gallery-main-3`
+- `snapshot/2023-12-12-test-with-new-gallery`
+- `snapshot/2023-12-12-test-with-new-gallery-master`
+- `snapshot/2023-12-13-test-with-new-gallery-and-pagination`
+- `snapshot/2023-12-17-lets-talk-now-button`
+- `snapshot/2023-12-18-test-with-bootstrap-and-all-links-and-border-on-pagination-buttons`
+- `snapshot/2023-12-18-test-with-bootstrap-and-all-links-and-border-on-pagination-buttons-main`
+- `snapshot/2023-12-19-test-graphQL-posts`
+- `snapshot/2023-12-19-test-graphQL-posts-query-works`
+- `snapshot/2023-12-20-test-graphQL-posts-first-6-works`
+- `snapshot/2023-12-20-test-graphQL-posts-all-posts-page-1-per-page-6-before`
+- `snapshot/2023-12-20-test-graphQL-posts-6-posts-nothing-on-2nd-page`
+- `snapshot/2023-12-21-server-side-pagination-works`
+- `snapshot/2023-12-21-server-side-pagination-works-fixed-url-on-page-1`
+- `snapshot/2023-12-21-trying-fix-slugs`
+- `snapshot/2023-12-22-adding-new-posts-works`
+- `snapshot/2023-12-22-fixed-navbar`
+- `snapshot/2023-12-22-fixed-navbar-again`
+- `snapshot/2023-12-22-fixed-pagination-forward-and-backwards`
+- `snapshot/2023-12-29-slug-works-for-each-project`
+- `snapshot/2023-12-30-fetched-data-posts-by-slug`
+- `snapshot/2023-12-31-rendering-ok-for-each-projects`
+- `snapshot/2024-01-02-seperated-query-for-getting-posts`
+- `snapshot/2024-01-02-navigation-links-on-project-page`
+- `snapshot/2024-01-02-generateStaticParams-Navlinks-onProjects`
+- `snapshot/2024-01-02-getPost-and-more-info-about-each-project`
+- `snapshot/2024-01-03-works-now-with-each-slug-and-info-for-each-project`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `main` should represent the latest consolidated state.
+- The snapshot tags preserve the old repo-by-repo progression without needing separate repositories.
