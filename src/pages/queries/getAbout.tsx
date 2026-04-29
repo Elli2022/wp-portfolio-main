@@ -1,4 +1,4 @@
-import WP from "../wp";
+import WP from "../api/wp";
 
 export default async function getAbout(uri:string){
     try {

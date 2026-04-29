@@ -1,3 +1,5 @@
+
+//src/lib/wp.tsx
 const apiKey = process.env.wordpressApiKey;
 
 const WP = async (query: string, variables?: any) => {

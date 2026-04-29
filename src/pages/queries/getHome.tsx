@@ -1,5 +1,5 @@
 //src/lib/queries/getHome.tsx
-import WP from "../wp";
+import WP from "../api/wp";
 
 export default async function getHome(uri:string){
     try {
@@ -13,6 +13,14 @@ export default async function getHome(uri:string){
                 presentingText
                 buttonText
                 buttonUrl
+                portfolioLinkText
+                aboutMeLinkText
+                aboutMeLinkUrl
+                contactLinkText
+                contactLinkUrl
+                portfolioLinkUrl {
+                  url
+                }
               }
             }
           }

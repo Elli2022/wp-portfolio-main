@@ -2,47 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Anpassa färgschemat enligt din design */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-color: #007bff; /* Blå */
+  --hover-color: #0056b3; /* Mörkare blå */
+  --text-color: #000; /* Svart */
+  --background-start: #d6dbdc; /* Ljusgrå */
+  --background-end: #fff; /* Vit */
 }
 
+/* Mörkt tema */
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --text-color: #fff; /* Vit */
+    --background-start: #000; /* Svart */
+    --background-end: #000; /* Svart */
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--text-color);
+  background: linear-gradient(to bottom, var(--background-start), var(--background-end));
 }
+
+/* ... andra stilar ... */
 
 .btn {
-  padding: 10px 25px; /* Storlek på padding runt texten */
-  background-color: #007bff; /* Blå bakgrundsfärg, ändra efter behov */
-  color: white; /* Vit textfärg */
-  text-transform: uppercase; /* Versaler */
-  border: none; /* Ingen ram */
-  border-radius: 25px; /* Runda hörn */
-  cursor: pointer; /* Muspekare som indikerar klickbarhet */
-  text-decoration: none; /* Ingen understrykning */
-  font-size: 16px; /* Textstorlek */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Animation för hover-effekt */
-  position: relative;
-  margin-top: 20px;
+  padding: 10px 25px;
+  background-color: var(--primary-color);
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block; /* Lägg till detta för att korrigera positionering */
+  margin-top: 20px; /* Justera avståndet till överliggande element */
 }
 
+.link {
+  color: var(--foreground-rgb); /* Sätter färgen till svart (eller vad nu --foreground-rgb är satt till) */
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.25rem; /* Anpassa storleken efter din design */
+  display: inline-block; /* Lägg till detta om du vill justera positionering */
+  margin-right: 15px; /* Justera avståndet mellan länkar */
+}
+
+/* Stilar för hover-effekter */
 .btn:hover, .btn:focus {
   background-color: #0056b3; /* Mörkare blå när knappen är hoverad eller fokuserad */
-  color: white; /* Gult för texten vid hover eller fokus, ändra efter behov */
-  outline: none; /* Ta bort outline som kommer med fokus */
+  color: white; /* Vit text vid hover */
+  outline: none;
 }
+
+/* Ta bort hover-effekter för .link */
+.link:hover, .link:focus {
+  color: var(--foreground-rgb); /* Behåller färgen svart */
+  text-decoration: underline; /* Om du vill ha en indikator på att det är en länk, annars ta bort denna rad */
+}
+
