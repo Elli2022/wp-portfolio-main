@@ -1,10 +1,33 @@
-# WP Portfolio
+# WordPress Portfolio
 
-This repository is the consolidated home for the `wp-portfolio` project history.
+`wordpress-portfolio` is a Next.js and TypeScript portfolio site that pulls content from a WordPress GraphQL endpoint.
 
-It is a Next.js and TypeScript portfolio site that fetches content from a WordPress API endpoint defined by the `wordpressApiKey` environment variable.
+The project renders editorial content for the main pages, shows portfolio work in a paginated project grid, and builds individual project pages from WordPress slugs. This repository is also the cleaned-up home for the full development history that previously lived across many separate GitHub repositories.
 
-## Run Locally
+## What The Project Does
+
+- Fetches page content such as home, about, and contact from WordPress
+- Renders portfolio posts with featured images and project subtitles
+- Supports cursor-based pagination for the project listing
+- Generates project detail pages from WordPress slugs
+- Keeps the older repo-by-repo evolution preserved as snapshot tags
+
+## Tech Stack
+
+- Next.js 14
+- React 18
+- TypeScript
+- WordPress GraphQL API
+- Tailwind CSS
+
+## Main Areas
+
+- `src/app/page.tsx` renders the landing page and paginated portfolio listing
+- `src/app/projects/[slugs]/page.tsx` renders an individual project page from its slug
+- `src/pages/queries/` contains the GraphQL query helpers for pages, posts, and single-project data
+- `src/pages/api/wp.tsx` is the shared WordPress request layer
+
+## Local Development
 
 Install dependencies and start the development server:
 
@@ -13,17 +36,24 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+The app runs locally at `http://localhost:3000`.
 
 ## Environment
 
-Create a local environment file and define:
+Create a local environment file and define the WordPress GraphQL endpoint:
 
 ```bash
-wordpressApiKey=https://your-wordpress-api-endpoint
+wordpressApiKey=https://your-wordpress-graphql-endpoint
 ```
 
-## Snapshot Timeline
+## Repository History
+
+This repository was consolidated from many earlier `wp-portfolio-...` repositories so the project can now live in one place with a single `main` branch and chronological snapshot tags.
+
+`main` represents the latest consolidated state. The historical milestones are preserved as tags rather than separate repositories.
+
+<details>
+<summary>Snapshot timeline</summary>
 
 - `snapshot/2023-11-30-main`
 - `snapshot/2023-11-30-rendering-ok`
@@ -61,7 +91,4 @@ wordpressApiKey=https://your-wordpress-api-endpoint
 - `snapshot/2024-01-02-getPost-and-more-info-about-each-project`
 - `snapshot/2024-01-03-works-now-with-each-slug-and-info-for-each-project`
 
-## Notes
-
-- `main` should represent the latest consolidated state.
-- The snapshot tags preserve the old repo-by-repo progression without needing separate repositories.
+</details>
