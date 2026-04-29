@@ -22,6 +22,11 @@ export default async function Home() {
   const home2Link = navHits.find((hit) => hit.title === "Home 2");
   const otherLinks = navHits.filter((hit) => hit.title !== "Home 2");
 
+  const categoryLinks = [
+    { title: "Bootstrap", uri: "/bootstrap" },
+    { title: "All", uri: "/all" },
+  ];
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#d6dbdc] to-white text-black p-24">
       <nav className="flex justify-between items-center">
@@ -32,7 +37,7 @@ export default async function Home() {
         ))}
       </nav>
       <header className="text-center mt-10">
-        <p className="mt-4">{data?.homePage.presentingText}</p>
+        <p className="text-center mt-4">{data?.homePage.presentingText}</p>
         <h1 className="text-5xl font-bold">{data?.homePage.homePageTitle}</h1>
       </header>
       <div className="button-and-link-container text-center">
@@ -45,35 +50,27 @@ export default async function Home() {
           </a>
         )}
 
-        {/* <div className="gallery-container text-center">
-          <section className="gallery">
-            {data?.homePage.projectGallery.map(
-              (project: any, index: number) =>
-                project.projectImage && project.projectImage.mediaItemUrl ? ( // Kontrollerar att projectImage och mediaItemUrl inte är null
-                  <div key={index} className="gallery-item">
-                    <a
-                      href={project.projectUrl || "#"} // Om projectUrl är null, sätt en fallback (t.ex. "#")
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img
-                        src={project.projectImage.mediaItemUrl} // Använder mediaItemUrl för att hämta bilden
-                        alt={
-                          project.projectTitle || `Project image ${index + 1}`
-                        }
-                        className="gallery-image"
-                      />
-                      <h3>{project.projectTitle}</h3>
-                    </a>
-                  </div>
-                ) : null // Om projectImage är null, rendera inte elementet
-            )}
-          </section>
-        </div> */}
+        <GalleryPagination initialProjects={projectGallery} />
+        <div className="mt-4 ">
+          <p className="text-xl">
+            {data?.homePage.freelanceProjects.freelanceTitle}
+          </p>
+          <h3 className="text-2xl font-semibold">
+            {data?.homePage.freelanceProjects.freelanceDescription}
+          </h3>
+          <a
+            href={data?.homePage.freelanceProjects.freelanceContactUrl}
+            className="btn bg-[var(--primary-color)] hover:bg-[var(--hover-color)] mt-4"
+          >
+            {data?.homePage.freelanceProjects.freelanceProjectsButton}
+          </a>
+        </div>
       </div>
-      <GalleryPagination
-        initialProjects={data?.homePage.projectGallery || []}
-      />
+      <footer className=" text-center py-4 mt-4">
+        <p className="text-gray-600 text-sm">
+          © {new Date().getFullYear()} All rights reserved.
+        </p>
+      </footer>
     </main>
   );
 }

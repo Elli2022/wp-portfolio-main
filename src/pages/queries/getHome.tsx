@@ -37,6 +37,13 @@ export default async function getHome(uri: string) {
       }
       homePageTitle
       presentingText
+      freelanceProjects {
+        freelanceContactUrl
+        freelanceDescription
+        freelanceTitle
+        freelanceProjectsButton
+        freelanceProjectsUrl
+      }
     }
     uri
   }

@@ -56,6 +56,8 @@ link, .home2-link{
   margin-top: 20px;
 }
 
+
+
 /* Stilar för hover-effekter */
 .btn:hover, .btn:focus {
   background-color: #0056b3; /* Mörkare blå när knappen är hoverad eller fokuserad */
