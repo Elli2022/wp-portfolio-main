@@ -3,15 +3,16 @@
 export interface ImageItem {
   mediaItemUrl: string;
   altText?: string;
+  uri: any;
 }
 
 export interface HomePageData {
+  homePage: any;
   homePageTitle: string;
   presentingText: string;
   buttonText: string;
   buttonUrl: string;
   homePageGallery: ImageItem[];
-  homePageGallery2: ImageItem[];
 }
 
 export interface PageNode {
@@ -22,4 +23,23 @@ export interface PageNode {
 
 export interface NavHit {
   node: PageNode;
+  title: string;
+  uri: any;
+  navHits: any;
+  id: any;
+}
+
+export interface initialImages {
+  initialImages: number;
+}
+
+export interface getImages {
+  page: number;
+  perImage: number;
+}
+
+export interface Home {
+  data: any;
+  navlinks: any;
+  hit: any;
 }

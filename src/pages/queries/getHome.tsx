@@ -30,10 +30,6 @@ export default async function getHome(uri: string) {
         mediaItemUrl
         uri
       }
-      homePageGallery2 {
-        mediaItemUrl
-        uri
-      }
     }
   }
 }

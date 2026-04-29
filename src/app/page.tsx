@@ -5,6 +5,7 @@ import getPages from "@/pages/queries/getPages";
 import Image from "next/image";
 import Link from "next/link";
 import { HomePageData, ImageItem, NavHit } from "@/types"; // Update this path to the actual location of your types.ts file
+import GalleryPagination from "./components/GalleryPagination";
 
 export default async function Home() {
   console.log("Fetching home page data...");
@@ -40,31 +41,20 @@ export default async function Home() {
             {home2Link.title}
           </a>
         )}
-        <section className="gallery">
+        {/* <section className="gallery">
           {data?.homePage.homePageGallery.map(
             (image: ImageItem, index: number) => (
               <img
                 key={index}
-                src={image.mediaItemUrl}
-                alt={image.altText || `Gallery image ${index + 1}`}
-                className="gallery-image"
+                src={image.mediaItemUrl} // Use the URL from your data
+                alt={image.altText || `Gallery image ${index + 1}`} // Use the alt text or a default description
+                className="gallery-image" // Add a class for styling
               />
             )
           )}
-        </section>
-        <section className="gallery">
-          {data?.homePage.homePageGallery2.map(
-            (image: ImageItem, index: number) => (
-              <img
-                key={index}
-                src={image.mediaItemUrl}
-                alt={image.altText || `Gallery image ${index + 1}`}
-                className="gallery-image"
-              />
-            )
-          )}
-        </section>
+        </section> */}
       </div>
+      <GalleryPagination initialImages={data?.homePage.homePageGallery || []} />
     </main>
   );
 }
