@@ -1,3 +1,4 @@
+//src/pages/queries/getAbout.tsx
 import WP from "../api/wp";
 
 export default async function getAbout(uri:string){
@@ -5,29 +6,15 @@ export default async function getAbout(uri:string){
         const res = await WP(`
         query getAbout($uri: ID!){
             page(id: $uri, idType: URI) {
-              content
-              GQL_content {
-                blocks {
-                    ... on Page_GqlContent_Blocks_Text {
-                      textField
-                    }
-                    ... on Page_GqlContent_Blocks_PortfolioTitle {
-                      portfolioTitleField
-                    }
-                    ... on Page_GqlContent_Blocks_Gallery {
-                      galleryField {
-                        image {
-                          sourceUrl
-                        }
-                        description
-                      }
-                    }
-                    }
-                  }
-                }
+              id
+              aboutPage {
+                fieldGroupName
+                aboutPageTitle
               }
+              content
             }
           }
+          
         `, {uri})
 
         if(!res?.data){
