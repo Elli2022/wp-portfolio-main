@@ -6,13 +6,11 @@ export default async function getHome(uri:string){
         const res = await WP(`
         query getHome($uri: ID!){
             page(id: $uri, idType: URI) {
+              id
               content
-              GQL_content {
-                fieldGroupName
-              }
-           
-              homePageTitle {
+              homePage {
                 homePageTitle
+                presentingText
               }
             }
           }
