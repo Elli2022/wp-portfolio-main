@@ -15,9 +15,13 @@ export default async function getHome(uri:string){
                 buttonUrl
                 portfolioLinkText
                 aboutMeLinkText
-                aboutMeLinkUrl
+                aboutMeLinkUrl {
+                  url
+                }
                 contactLinkText
-                contactLinkUrl
+                contactLinkUrl {
+                  url
+                }
                 portfolioLinkUrl {
                   url
                 }
