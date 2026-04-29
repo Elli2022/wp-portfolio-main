@@ -13,6 +13,9 @@ export default async function Home() {
         <h1>{data?.homePage.homePageTitle}</h1>
         <p>{data?.homePage.presentingText}</p>
         <p>{data?.content}</p>
+        <a href={data?.homePage.buttonUrl} className="btn">
+          {data?.homePage.buttonText}
+        </a>
        
        
       </div>

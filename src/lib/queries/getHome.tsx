@@ -11,6 +11,8 @@ export default async function getHome(uri:string){
               homePage {
                 homePageTitle
                 presentingText
+                buttonText
+                buttonUrl
               }
             }
           }

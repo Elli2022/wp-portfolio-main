@@ -25,3 +25,24 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.btn {
+  padding: 10px 25px; /* Storlek på padding runt texten */
+  background-color: #007bff; /* Blå bakgrundsfärg, ändra efter behov */
+  color: white; /* Vit textfärg */
+  text-transform: uppercase; /* Versaler */
+  border: none; /* Ingen ram */
+  border-radius: 25px; /* Runda hörn */
+  cursor: pointer; /* Muspekare som indikerar klickbarhet */
+  text-decoration: none; /* Ingen understrykning */
+  font-size: 16px; /* Textstorlek */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Animation för hover-effekt */
+  position: relative;
+  margin-top: 20px;
+}
+
+.btn:hover, .btn:focus {
+  background-color: #0056b3; /* Mörkare blå när knappen är hoverad eller fokuserad */
+  color: white; /* Gult för texten vid hover eller fokus, ändra efter behov */
+  outline: none; /* Ta bort outline som kommer med fokus */
+}
