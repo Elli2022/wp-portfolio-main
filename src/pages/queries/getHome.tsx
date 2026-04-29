@@ -30,6 +30,15 @@ export default async function getHome(uri: string) {
         mediaItemUrl
         uri
       }
+      projectGallery {
+        fieldGroupName
+        projectUrl1
+        projectImage1 {
+          uri
+          title
+          mediaItemUrl
+        }
+      }
     }
   }
 }

@@ -13,6 +13,9 @@ export default async function Home() {
   const navlinks = await getPages();
   const navHits = Object.values(navlinks.edges).map((hit: any) => hit.node);
 
+  // Extrahera projectGallery från homeData
+  const projectGallery = data?.homePage?.projectGallery || [];
+
   console.log("Fetched data:", data);
   console.log("testdata:", navHits);
 
@@ -53,6 +56,30 @@ export default async function Home() {
             )
           )}
         </section> */}
+        <div className="gallery-container text-center">
+          <section className="gallery">
+            {data?.homePage.projectGallery.map((project: any, index: any) => (
+              <div key={index} className="gallery-item">
+                <img
+                  src={project.projectImage1.mediaItemUrl}
+                  alt={
+                    project.projectImage1.title || `Project image ${index + 1}`
+                  }
+                />
+                <div className="gallery-item-info">
+                  <h3>{project.projectImage1.title}</h3>
+                  <a
+                    href={project.projectUrl1}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Project
+                  </a>
+                </div>
+              </div>
+            ))}
+          </section>
+        </div>
       </div>
       <GalleryPagination initialImages={data?.homePage.homePageGallery || []} />
     </main>
