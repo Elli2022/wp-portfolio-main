@@ -8,38 +8,37 @@ export default async function getHome(uri: string) {
         query getHome($uri: ID!){
             page(id: $uri, idType: URI) {
               id
-    content
+              content
     homePage {
-      homePageTitle
-      presentingText
-      buttonText
-      buttonUrl
-      portfolioLinkText
       aboutMeLinkText
       aboutMeLinkUrl {
+        title
         url
       }
+      buttonText
+      buttonUrl
       contactLinkText
       contactLinkUrl {
+        title
         url
       }
+      portfolioLinkText
       portfolioLinkUrl {
+        title
         url
-      }
-      homePageGallery {
-        mediaItemUrl
-        uri
       }
       projectGallery {
         fieldGroupName
-        projectUrl1
-        projectImage1 {
-          uri
-          title
+        projectTitle
+        projectUrl
+        projectImage {
           mediaItemUrl
         }
       }
+      homePageTitle
+      presentingText
     }
+    uri
   }
 }
         `,

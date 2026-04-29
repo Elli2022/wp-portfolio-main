@@ -44,44 +44,36 @@ export default async function Home() {
             {home2Link.title}
           </a>
         )}
-        {/* <section className="gallery">
-          {data?.homePage.homePageGallery.map(
-            (image: ImageItem, index: number) => (
-              <img
-                key={index}
-                src={image.mediaItemUrl} // Use the URL from your data
-                alt={image.altText || `Gallery image ${index + 1}`} // Use the alt text or a default description
-                className="gallery-image" // Add a class for styling
-              />
-            )
-          )}
-        </section> */}
+
         <div className="gallery-container text-center">
           <section className="gallery">
-            {data?.homePage.projectGallery.map((project: any, index: any) => (
-              <div key={index} className="gallery-item">
-                <img
-                  src={project.projectImage1.mediaItemUrl}
-                  alt={
-                    project.projectImage1.title || `Project image ${index + 1}`
-                  }
-                />
-                <div className="gallery-item-info">
-                  <h3>{project.projectImage1.title}</h3>
-                  <a
-                    href={project.projectUrl1}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Project
-                  </a>
-                </div>
-              </div>
-            ))}
+            {data?.homePage.projectGallery.map(
+              (project: any, index: number) =>
+                project.projectImage && project.projectImage.mediaItemUrl ? ( // Kontrollerar att projectImage och mediaItemUrl inte är null
+                  <div key={index} className="gallery-item">
+                    <a
+                      href={project.projectUrl || "#"} // Om projectUrl är null, sätt en fallback (t.ex. "#")
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={project.projectImage.mediaItemUrl} // Använder mediaItemUrl för att hämta bilden
+                        alt={
+                          project.projectTitle || `Project image ${index + 1}`
+                        }
+                        className="gallery-image"
+                      />
+                      <h3>{project.projectTitle}</h3>
+                    </a>
+                  </div>
+                ) : null // Om projectImage är null, rendera inte elementet
+            )}
           </section>
         </div>
       </div>
-      <GalleryPagination initialImages={data?.homePage.homePageGallery || []} />
+      <GalleryPagination
+        initialImages={data?.homePage.projectGalleryGallery || []}
+      />
     </main>
   );
 }
