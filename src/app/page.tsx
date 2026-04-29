@@ -45,7 +45,7 @@ export default async function Home() {
           </a>
         )}
 
-        <div className="gallery-container text-center">
+        {/* <div className="gallery-container text-center">
           <section className="gallery">
             {data?.homePage.projectGallery.map(
               (project: any, index: number) =>
@@ -69,10 +69,10 @@ export default async function Home() {
                 ) : null // Om projectImage är null, rendera inte elementet
             )}
           </section>
-        </div>
+        </div> */}
       </div>
       <GalleryPagination
-        initialImages={data?.homePage.projectGalleryGallery || []}
+        initialProjects={data?.homePage.projectGallery || []}
       />
     </main>
   );
